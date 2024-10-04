@@ -5,8 +5,8 @@ using UnityEngine.Pool;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] Enemy _enemyPrefab;
-    [SerializeField] float _spawnDelay = 2f;
+    [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private float _spawnDelay = 2f;
     private List<Transform> _spawnPoints = new List<Transform>();
     private ObjectPool<Enemy> _enemyPool;
     private int _poolCapacity = 10;
