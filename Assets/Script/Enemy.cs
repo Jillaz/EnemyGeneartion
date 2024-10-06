@@ -12,4 +12,9 @@ public class Enemy : MonoBehaviour
             Release?.Invoke(this);
         }
     }
+
+    public void SetDiretion(Vector3 direction)
+    {
+        transform.eulerAngles = direction;
+    }
 }

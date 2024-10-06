@@ -16,7 +16,7 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            _spawnPoints.Add(transform.GetChild(i).transform);
+            _spawnPoints.Add(transform.GetChild(i));
         }
 
         _enemyPool = new ObjectPool<Enemy>(
@@ -54,7 +54,7 @@ public class Spawner : MonoBehaviour
     {
         enemy.gameObject.SetActive(true);
         enemy.transform.position = GetSpawnPosition();
-        enemy.transform.eulerAngles = GetDirection();
+        enemy.SetDiretion(GetDirection());
         enemy.Release += ReleaseEnemy;
     }
 
