@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private Enemy _enemyPrefab;
     [SerializeField] private float _spawnDelay = 2f;
+    [SerializeField] private Transform _selectedTarget;
     private List<Transform> _spawnPoints = new List<Transform>();
     private ObjectPool<Enemy> _enemyPool;
     private int _poolCapacity = 10;
@@ -53,9 +54,18 @@ public class Spawner : MonoBehaviour
     private void OnActionGet(Enemy enemy)
     {
         enemy.gameObject.SetActive(true);
-        enemy.transform.position = GetSpawnPosition();
-        enemy.SetDiretion(GetDirection());
-        enemy.Release += ReleaseEnemy;
+        enemy.transform.position = GetSpawnPoint();
+
+        if (_selectedTarget != null)
+        {
+            enemy.SetTarget(_selectedTarget);
+        }
+        else
+        {
+            enemy.SetRotation(GetRotation());
+        }
+
+        enemy.Released += ReleaseEnemy;
     }
 
     private void ReleaseEnemy(Enemy enemy)
@@ -66,21 +76,21 @@ public class Spawner : MonoBehaviour
     private void OnActionRelease(Enemy enemy)
     {
         enemy.gameObject.SetActive(false);
-        enemy.Release -= ReleaseEnemy;
-    }    
+        enemy.Released -= ReleaseEnemy;
+    }
 
-    private Vector3 GetSpawnPosition()
+    private Vector3 GetSpawnPoint()
     {
         int selectedSpawnPoint;
+
         int minSpawnPointNumber = 0;
         int maxSpawnPointNumber = _spawnPoints.Count;
-
         selectedSpawnPoint = Random.Range(minSpawnPointNumber, maxSpawnPointNumber);
 
         return _spawnPoints[selectedSpawnPoint].position;
     }
 
-    private Vector3 GetDirection()
+    private Vector3 GetRotation()
     {
         int minRotationValue = 1;
         int maxRotationValue = 360;

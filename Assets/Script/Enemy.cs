@@ -3,18 +3,32 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    public event UnityAction<Enemy> Release;
+    private Transform _target;
+    public event UnityAction<Enemy> Released;
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.TryGetComponent(out Wall wall))
+        if (_target != null)
         {
-            Release?.Invoke(this);
+            transform.LookAt(_target);
         }
     }
 
-    public void SetDiretion(Vector3 direction)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out DeadEnd wall))
+        {            
+            Released?.Invoke(this);
+        }
+    }
+
+    public void SetRotation(Vector3 direction)
     {
         transform.eulerAngles = direction;
+    }
+
+    public void SetTarget(Transform target)
+    {
+        _target = target;
     }
 }
