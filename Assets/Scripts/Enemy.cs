@@ -22,12 +22,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void SetRotation(Vector3 direction)
-    {
-        transform.eulerAngles = direction;
-    }
-
-    public void SetTarget(Transform target)
+    public void Init(Transform target)
     {
         _target = target;
     }

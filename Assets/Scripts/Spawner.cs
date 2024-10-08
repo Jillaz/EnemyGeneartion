@@ -35,11 +35,11 @@ public class Spawner : MonoBehaviour
     {
         if (_spawnPoints.Count != 0)
         {
-            StartCoroutine(CreateEnemy());
+            StartCoroutine(CreateEnemies());
         }
     }
 
-    private IEnumerator CreateEnemy()
+    private IEnumerator CreateEnemies()
     {
         var spawnDelay = new WaitForSeconds(_spawnDelay);
 
@@ -55,16 +55,7 @@ public class Spawner : MonoBehaviour
     {
         enemy.gameObject.SetActive(true);
         enemy.transform.position = GetSpawnPoint();
-
-        if (_selectedTarget != null)
-        {
-            enemy.SetTarget(_selectedTarget);
-        }
-        else
-        {
-            enemy.SetRotation(GetRotation());
-        }
-
+        enemy.Init(_selectedTarget);
         enemy.Released += ReleaseEnemy;
     }
 
@@ -88,18 +79,5 @@ public class Spawner : MonoBehaviour
         selectedSpawnPoint = Random.Range(minSpawnPointNumber, maxSpawnPointNumber);
 
         return _spawnPoints[selectedSpawnPoint].position;
-    }
-
-    private Vector3 GetRotation()
-    {
-        int minRotationValue = 1;
-        int maxRotationValue = 360;
-        int rotationX = 0;
-        int rotationY;
-        int rotationZ = 0;
-
-        rotationY = Random.Range(minRotationValue, maxRotationValue);
-
-        return new Vector3(rotationX, rotationY, rotationZ);
     }
 }

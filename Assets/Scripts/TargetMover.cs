@@ -25,14 +25,6 @@ public class TargetMover : MonoBehaviour
         }
     }
 
-    private void SelectTarget()
-    {
-        Transform currentTarget;
-
-        currentTarget = _waypoints[_selectedTarget];
-        transform.LookAt(currentTarget);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform == _waypoints[_selectedTarget])
@@ -48,5 +40,13 @@ public class TargetMover : MonoBehaviour
 
             SelectTarget();
         }
+    }
+
+    private void SelectTarget()
+    {
+        Transform currentTarget;
+
+        currentTarget = _waypoints[_selectedTarget];
+        transform.LookAt(currentTarget);
     }
 }
