@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class Enemy : MonoBehaviour
 {
     private Transform _target;
+
     public event UnityAction<Enemy> Released;
 
     private void Update()

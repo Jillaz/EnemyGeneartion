@@ -5,14 +5,12 @@ public class TargetMover : MonoBehaviour
 {
     [SerializeField] private List<Transform> _waypoints = new List<Transform>();
     [SerializeField] private float _speed = 2.0f;
-    private int _firstTarget = 0;
-    private int _selectedTarget;
+    private int _selectedTarget = 0;
 
     private void Awake()
     {
         if (_waypoints.Count != 0)
         {
-            _selectedTarget = _firstTarget;
             SelectTarget();
         }
     }
@@ -29,24 +27,13 @@ public class TargetMover : MonoBehaviour
     {
         if (other.transform == _waypoints[_selectedTarget])
         {
-            if (_waypoints.Count == (_selectedTarget + 1))
-            {
-                _selectedTarget = _firstTarget;
-            }
-            else
-            {
-                _selectedTarget++;
-            }
-
+            _selectedTarget = ++_selectedTarget % _waypoints.Count;            
             SelectTarget();
         }
     }
 
     private void SelectTarget()
     {
-        Transform currentTarget;
-
-        currentTarget = _waypoints[_selectedTarget];
-        transform.LookAt(currentTarget);
+        transform.LookAt(_waypoints[_selectedTarget]);
     }
 }
